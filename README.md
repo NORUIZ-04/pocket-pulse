@@ -20,6 +20,24 @@ graph TD
 
 ---
 
+## 🎨 Phase 2 Design System Architecture
+
+Phase 2 introduces a flexible, dual-theme Design System built with semantic CSS custom properties (design tokens).
+
+```mermaid
+graph LR
+    tokens["Design Tokens\n(tokens.css)\nLight & Dark Themes"]
+    global["Global Baseline\n(global.css)"]
+    components["Reusable UI Components\n(Button, Input, Card, QuickExpenseButton, Modal)"]
+    app["Interactive Showcase\n(App.tsx)\nwith Theme Toggle"]
+
+    tokens --> global
+    global --> components
+    components --> app
+```
+
+---
+
 ## 📁 Repository Structure
 
 ```text
@@ -31,7 +49,16 @@ pocket-pulse/
 ├── frontend/                # React Single Page Application (SPA)
 │   ├── .env.example         # Environment template for frontend
 │   ├── src/
-│   │   ├── App.tsx          # Baseline React app shell
+│   │   ├── styles/
+│   │   │   ├── tokens.css   # Light & Dark design tokens (semantic variables)
+│   │   │   └── global.css   # Global CSS reset & base element styling
+│   │   ├── components/ui/
+│   │   │   ├── Button.tsx & .css        # Button with variants, sizes & spinner
+│   │   │   ├── Input.tsx & .css         # Form input with label & error handling
+│   │   │   ├── Card.tsx & .css          # Bordered, elevated & interactive cards
+│   │   │   ├── QuickExpenseButton.tsx & .css # 1-tap <2s quick expense button
+│   │   │   └── Modal.tsx & .css         # Accessible modal / bottom sheet
+│   │   ├── App.tsx          # Phase 2 Design System Interactive Showcase
 │   │   └── main.tsx         # Entry point mounting React to DOM
 │   ├── package.json         # Frontend dependencies (React, Vite, TypeScript)
 │   └── vite.config.ts       # Vite build tool configuration
@@ -52,83 +79,37 @@ pocket-pulse/
 
 ---
 
-## 🧠 What Exists in Phase 1 & Why
+## 🧠 What Exists in Phase 2 & Why
 
-### 1. Root `.gitignore` (Security First)
-* **Why**: Prevents secret environment variables (`.env`) and heavy binary folders (`node_modules/`, `dist/`) from ever being committed to GitHub.
+### 1. Dual-Theme Semantic Design Tokens (`tokens.css`)
+* **Why**: Both Light and Dark themes are intentionally crafted using semantic CSS variables (`--color-bg-app`, `--color-text-primary`, `--color-brand-primary`, etc.). Theme switching is controlled via `data-theme="light"` or `data-theme="dark"` on `<html>` with fallback to `prefers-color-scheme`.
 
-### 2. Frontend Scaffolding (`frontend/`)
-* **Technology**: React + TypeScript + Vite.
-* **Why Vite**: Vite is significantly faster than legacy build tools like Create React App. It provides instant hot-module reloading during development.
-
-### 3. Backend Scaffolding (`backend/`)
-* **Technology**: Node.js + Express + TypeScript + Prisma ORM.
-* **Why Express**: Lightweight, battle-tested HTTP framework ideal for REST APIs.
-* **Why Prisma**: Provides TypeScript types directly generated from the database schema, preventing SQL typos and runtime schema bugs.
-
-### 4. Health Check API (`GET /api/v1/health`)
-* **Endpoint**: `http://localhost:5000/api/v1/health`
-* **Why**: Serves as a baseline health verification to confirm that the server is alive, measuring server uptime and database connectivity status.
-
-```json
-{
-  "status": "ok",
-  "service": "Pocket Pulse API",
-  "version": "1.0.0",
-  "timestamp": "2026-08-18T13:41:08.658Z",
-  "uptimeSeconds": 7,
-  "database": {
-    "connected": false,
-    "status": "disconnected (PostgreSQL container pending setup)"
-  }
-}
-```
+### 2. Core UI Components (`frontend/src/components/ui/`)
+* **Button (`Button.tsx`)**: Supports `primary`, `secondary`, `ghost`, and `danger` variants, size scale (`sm`, `md`, `lg`), `fullWidth`, and accessible loading spinner.
+* **Input (`Input.tsx`)**: Accessible text/number input supporting labels, helper text, and error states with focus rings.
+* **Card (`Card.tsx`)**: Flexible surface container supporting `flat`, `bordered`, and `elevated` variants, plus interactive hover states.
+* **QuickExpenseButton (`QuickExpenseButton.tsx`)**: Engineered specifically for Pocket Pulse's core principle of recording an expense in under 2 seconds. Features emoji icon, preset amount in INR/paise, category label, and active tap feedback.
+* **Modal (`Modal.tsx`)**: Accessible modal dialog / mobile bottom-sheet with backdrop blur, keyboard ESC dismissal, and scroll lock.
 
 ---
 
-## 🚀 How to Run Locally
+## 🚀 How to Run & Verify Phase 2 Locally
 
-### Prerequisites
-* **Node.js**: v18+ or v20+ installed
-* **npm**: v9+ or v10+
-
-### 1. Setup Backend
-1. Open a terminal and navigate to the backend directory:
-   ```bash
-   cd backend
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Create your local `.env` file from `.env.example`:
-   ```bash
-   cp .env.example .env
-   ```
-4. Start the backend development server:
-   ```bash
-   npm run dev
-   ```
-   The backend will run at `http://localhost:5000`.
-
-### 2. Setup Frontend
-1. Open a new terminal and navigate to the frontend directory:
+### 1. Run Frontend Design System Showcase
+1. Open a terminal and navigate to `frontend/`:
    ```bash
    cd frontend
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Create your local `.env` file from `.env.example`:
-   ```bash
-   cp .env.example .env
-   ```
-4. Start the frontend development server:
-   ```bash
    npm run dev
    ```
-   The frontend will run at `http://localhost:5173`.
+2. Open `http://localhost:5173` in your browser.
+3. Test the interactive theme switcher toggle (`☀️ Light Mode` / `🌙 Dark Mode`).
+4. Test clicking the **Quick Expense Buttons** to launch the interactive modal.
+
+### 2. Run Typechecking & Build Verification
+```bash
+cd frontend
+npm run build
+```
 
 ---
 
