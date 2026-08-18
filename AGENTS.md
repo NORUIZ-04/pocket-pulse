@@ -55,7 +55,21 @@ Built for 4-5 users but with production-quality engineering.
 - Make small, meaningful git commits (e.g. "feat: add expense creation
   endpoint"), not one giant commit.
 - Never commit secrets. Use .env + .env.example.
-- Work in feature branches per phase (e.g. `phase-1-foundation`). Create a PR when a phase is complete, push it, and wait for me to review and merge it manually on GitHub.
+
+## Git Workflow — Branch Per Phase (MANDATORY from Phase 2 onward)
+- Before starting any new phase, create a new branch from main:
+  `git checkout -b feature/phase-<number>-<short-name>`
+  (e.g. `feature/phase-2-design-system`, `feature/phase-3-auth`)
+- Do ALL work for this phase on this branch ONLY. Never push feature work directly to main.
+- Make small, meaningful commits as work progresses (see commit rules above).
+- Before opening a PR, update `README.md` at the project root with a new section for this phase: what was built, why, how to run/verify it, and a simple diagram (ASCII or Mermaid) where it helps explain architecture or flow (e.g. request flow, folder structure, database entities).
+- Push the branch to GitHub, then open a Pull Request into main. The PR description must include:
+  - Summary of what this phase adds
+  - Why these decisions were made
+  - Any diagrams relevant to this phase
+  - How to test/verify it locally
+  - Any risks or follow-ups
+- Do NOT merge the PR yourself. Stop after opening it and wait for me to review and merge it manually on GitHub.
 - Only start the next phase's branch after I confirm the previous PR is merged.
 
 ## README.md Requirement
