@@ -55,6 +55,11 @@ Built for 4-5 users but with production-quality engineering.
 - Make small, meaningful git commits (e.g. "feat: add expense creation
   endpoint"), not one giant commit.
 - Never commit secrets. Use .env + .env.example.
+- Work in feature branches per phase (e.g. `phase-1-foundation`). Create a PR when a phase is complete, push it, and wait for me to review and merge it manually on GitHub.
+- Only start the next phase's branch after I confirm the previous PR is merged.
+
+## README.md Requirement
+- README.md must be kept up to date phase-by-phase, written so a beginner (me) can read it later and understand what exists and why, not just what commands to run. Include diagrams where they clarify architecture or flow.
 
 ## Current phase
 Phase 1 — Project Foundation ONLY (repo structure, frontend/backend
