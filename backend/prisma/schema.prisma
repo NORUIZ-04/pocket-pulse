@@ -1,0 +1,16 @@
+// Prisma Schema for Pocket Pulse
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Phase 1 Baseline schema placeholder model for Prisma Client generation
+model HealthCheck {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+}
